@@ -540,7 +540,7 @@ impl Component for Model {
                 for card_name in export_map.keys() {
                     export_list.push(format!("{} {}", export_map[card_name], card_name))
                 }
-                //web_sys::window().unwrap().navigator().clipboard().write_text(&export_list.join("\n"));
+                web_sys::window().unwrap().navigator().clipboard().write_text(&export_list.join("\n"));
             }
             Msg::StartDraft() => {
                 self.in_draft = true;
