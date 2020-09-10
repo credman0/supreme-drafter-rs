@@ -442,13 +442,6 @@ impl Model {
                             </td>
                         </tr>
                     }})}
-                    {if self.get_random_set_num()>0 {html!{
-                        <tr>
-                            <td class="pt-3-half">{"Random"}</td>
-                            <td class="pt-3-half">{self.get_random_set_num()}</td>
-                            <td></td>
-                        </tr>}
-                    }else{html!{}}}
                     <tr>
                     <td></td>
                     <td></td>
@@ -460,6 +453,13 @@ impl Model {
                         </button>
                     </td>
                     </tr>
+                    {if self.get_random_set_num()>0 {html!{
+                        <tr>
+                            <td class="pt-3-half">{"Random"}</td>
+                            <td class="pt-3-half">{self.get_random_set_num()}</td>
+                            <td></td>
+                        </tr>}
+                    }else{html!{}}}
                 </tbody>
             </table>
             <div class="container my-3">
