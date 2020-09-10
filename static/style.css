@@ -1,0 +1,58 @@
+
+.selected {
+    padding:10px !important;
+    padding:10px !important;
+    border-width: 2px !important;
+}
+
+.card-img {
+    width:265px;
+    height:370px;
+    margin:0 auto;
+    cursor: pointer;
+}
+
+.table-nonfluid {
+    margin: auto;
+    width: auto !important;
+ }
+
+ .svg-button {
+     cursor: pointer;
+     fill:#ff0000;
+ }
+
+ .svg-button:hover {
+     fill:#ff5555
+ }
+
+.svg-disabled {
+    fill:#555555
+}
+
+.deck-viewer > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+}
+
+.deck-viewer > .row > .col-xs-4 {
+    display: inline-block;
+    float: none;
+}
+
+.card {
+    overflow: hidden;
+}
+
+.card-text {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.flipped, .flipped .col-xs-4
+{
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+}
