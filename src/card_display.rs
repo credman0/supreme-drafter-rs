@@ -45,10 +45,6 @@ impl CardDisplay {
             }
         }
     }
-
-    pub fn get_selected (&self) -> bool {
-        return self.selected;
-    }
 }
 
 impl Component for CardDisplay {
@@ -88,7 +84,7 @@ impl Component for CardDisplay {
 
     fn view(&self) -> Html {
         html! {
-            <div class="card shadow-sm mx-1 px-1 pt-1 pb-1 mt-1 ">
+            <div class="card shadow-sm mx-1 px-1 pt-1 pb-1 mt-1">
                 <img class=&self.class src=self.url alt=self.name onclick=self.link.callback(|_| Msg::Clicked())/>
                 <div class="card-body align-items-center d-flex justify-content-center">
                     <p class="card-text"><b>{&self.name}</b></p>

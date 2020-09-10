@@ -98,7 +98,7 @@ impl SetGenerator {
     // }
 
     pub fn new (all_set_json:Value) -> Self {
-        let mut generator = SetGenerator{all_set_json:all_set_json.as_object().unwrap().clone(), mythics:vec![], rares:vec![], uncommons:vec![], commons:vec![], basics:vec![], pack_number:0, pack_series:vec![]};
+        let generator = SetGenerator{all_set_json:all_set_json.as_object().unwrap().clone(), mythics:vec![], rares:vec![], uncommons:vec![], commons:vec![], basics:vec![], pack_number:0, pack_series:vec![]};
         generator
     }
 
@@ -223,7 +223,19 @@ impl Model {
         while self.sorted_picks.len() <= card.cmc as usize {
             self.sorted_picks.push(vec![]);
         }
-        self.sorted_picks[card.cmc as usize].push(card);
+        let mut idx = 0;
+        for existing in &self.sorted_picks[card.cmc as usize] {
+            if existing.name < card.name {
+                idx+=1;
+            } else {
+                break;
+            }
+        }
+        if idx < self.sorted_picks[card.cmc as usize].len() {
+            self.sorted_picks[card.cmc as usize].insert(idx, card);
+        } else {
+            self.sorted_picks[card.cmc as usize].push(card);
+        }
     }
 
     fn pick_card(&mut self, name:String) {
@@ -276,7 +288,7 @@ impl Model {
                 <>
                 <div class="container my-3 bg-light">
                     <div class="col-md-12 text-center">
-                        <button type="button" class="btn btn-primary" onclick=self.link.callback(|_| Msg::Export())>{"Export to Clipboard"}</button>
+                        <button type="button" class="btn btn-success" onclick=self.link.callback(|_| Msg::Export())>{"Export to Clipboard"}</button>
                     </div>
                 </div>
                 </>
@@ -311,7 +323,9 @@ impl Model {
                             <div class="col-xs-4">
                             { 
                                 for pick_column.iter().map(|e| html!{
-                                    <CardDisplay  onsignal=self.link.callback(|display| Msg::Select(display)) name=&e.name url=&e.img_url selected=&e.selected/>
+                                    <div class="picked-card-container">
+                                        <img class="picked-card shadow-sm mx-1 mt-1 mb-1" src=e.img_url alt=e.name/>
+                                    </div>
                                 })
                             }
                             </div>
