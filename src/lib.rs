@@ -119,6 +119,7 @@ impl SetGenerator {
                 set_list.push(setup.0.clone());
             }
         }
+        // This insertion could of course be a binary search instead but I don't want to do that
         for _ in 0..num_random_packs { 
             let idx = (js_sys::Math::random() * (all_set_selection_list.len() as f64)) as usize;
             set_list.push(all_set_selection_list[idx].clone());
@@ -381,7 +382,17 @@ impl Model {
                     </tr>
                 </thead>
                 <tbody>
-                    {for self.setup_info.sets.iter().map( |setup_set| {let set = setup_set.clone(); let set_clone = setup_set.clone(); let set_clone_2 = setup_set.clone(); let set_name = setup_set.0.clone(); let num_packs = setup_set.clone().1; let num_packs_clone = setup_set.clone().1; let unassigned_packs = NUM_PACKS - self.get_unassigned_packs_num(); html!{
+                    {for self.setup_info.sets.iter().map( |setup_set| {
+                        // This unpleasant series of variable declarations courtesy of my inability to get around moving one into each enclosure
+                        // and having no other place to declare them
+                        let set = setup_set.clone();
+                        let set_clone = setup_set.clone();
+                        let set_clone_2 = setup_set.clone(); 
+                        let set_name = setup_set.0.clone(); 
+                        let num_packs = setup_set.clone().1; 
+                        let num_packs_clone = setup_set.clone().1; 
+                        let unassigned_packs = NUM_PACKS - self.get_unassigned_packs_num(); 
+                        html!{
                         <tr>
                             <td class="pt-3-half">  
                             <select name="sets" onchange=self.link.callback(move |e| {
@@ -566,7 +577,7 @@ impl Component for Model {
                     }
                 }
             }
-            Msg::DoNothing() => {}
+            Msg::DoNothing() => {return false}
         }
         true
     }
@@ -579,10 +590,25 @@ impl Component for Model {
     }
 
     fn view(&self) -> Html {
-        if self.in_draft {
-            self.draft_screen()
-        } else {
-            self.setup_screen()
+        html!{
+            <>
+            <div id="main">
+            {if self.in_draft {
+                self.draft_screen()
+            } else {
+                self.setup_screen()
+            }}
+            </div>
+            <footer class="footer">
+            <a href="https://github.com/credman0/supreme-drafter-rs" class="no-decor hover-underline">
+            <div class="fl fl-center-y">
+            <svg width="18" class="m-r-10" viewBox="0 0 32 32"><path fill="#424950" d="M16 0.4c-8.8 0-16 7.2-16 16 0 7.1 4.6 13.1 10.9 15.2 0.8 0.1 1.1-0.3 1.1-0.8 0-0.4 0-1.6 0-3-4.5 1-5.4-1.9-5.4-1.9-0.7-1.8-1.8-2.3-1.8-2.3-1.5-1 0.1-1 0.1-1 1.6 0.1 2.5 1.6 2.5 1.6 1.4 2.4 3.7 1.7 4.7 1.3 0.1-1 0.6-1.7 1-2.1-3.6-0.4-7.3-1.8-7.3-7.9 0-1.7 0.6-3.2 1.6-4.3-0.2-0.4-0.7-2 0.2-4.2 0 0 1.3-0.4 4.4 1.6 1.3-0.4 2.6-0.5 4-0.5 1.4 0 2.7 0.2 4 0.5 3.1-2.1 4.4-1.6 4.4-1.6 0.9 2.2 0.3 3.8 0.2 4.2 1 1.1 1.6 2.5 1.6 4.3 0 6.1-3.7 7.5-7.3 7.9 0.6 0.5 1.1 1.5 1.1 3 0 2.1 0 3.9 0 4.4 0 0.4 0.3 0.9 1.1 0.8 6.4-2.1 10.9-8.1 10.9-15.2 0-8.8-7.2-16-16-16z"></path></svg>
+            <div style="font-size:14px;">{"Github"}</div>
+            </div>
+            </a>
+            </footer>
+            
+            </>
         }
     }
 }
