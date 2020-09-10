@@ -43,8 +43,8 @@
     overflow:hidden;
     width:132px;
     height:185px;
-    transition: width 0.1s;
-    transition: height 0.1s;
+    transition: width 0.07s;
+    transition: height 0.07s;
 }
 .picked-card-container:hover {
     overflow:visible;
@@ -55,6 +55,10 @@
 
 .picked-card-container:not(:first-child) {
     margin-top: -150px !important;
+}
+
+.picked-card-container:not(:last-child):hover {
+    margin-bottom: 150px !important;
 }
 
 .deck-viewer > .row {
@@ -83,3 +87,37 @@
     -ms-transform:rotateX(180deg); /* IE 9 */
     -webkit-transform:rotateX(180deg); /* Safari and Chrome */
 }
+
+.footer {
+    position: relative;
+    margin-top: -50px; /* negative value of footer height */
+    height: 50px;
+    clear:both;
+    padding-top:20px;
+    padding-left: 20px;
+  }
+
+.hover-underline:hover {
+    text-decoration: underline !important;
+}
+
+.fl {
+    display: flex;
+}
+
+.fl-center-y {
+    align-items: center;
+}
+
+.no-decor {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.m-r-10 {
+    margin-right: 10px;
+}
+
+  #main {
+    padding-bottom:50px;
+  }
